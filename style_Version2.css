@@ -1,0 +1,8 @@
+body { 
+  font-family: 'Segoe UI', sans-serif; 
+  background: linear-gradient(to right, #0f2027, #203a43, #2c5364); 
+  color: #fff; 
+  text-align: center; 
+  padding: 2em; 
+}
+/* ...resto del contenido como te lo entregué antes... */

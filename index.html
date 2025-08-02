@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Generador Viral de Suscriptores</title>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; background: linear-gradient(to right, #0f2027, #203a43, #2c5364); color: #fff; text-align: center; padding: 2em; }
+    .container { max-width: 600px; margin: auto; background: rgba(0,0,0,0.5); padding: 2em; border-radius: 12px; box-shadow: 0 0 20px rgba(255,255,255,0.2); }
+    input, button { padding: 0.8em; margin: 1em 0; width: 100%; border: none; border-radius: 8px; font-size: 1em; }
+    input[type="email"] { background: #fff; color: #000; }
+    input[type="checkbox"] { width: auto; margin-right: 0.5em; }
+    button { background: #00c6ff; color: #fff; cursor: pointer; transition: 0.3s; }
+    button:hover { background: #0072ff; }
+    .result { margin-top: 1em; background: #222; padding: 1em; border-radius: 8px; word-break: break-word; }
+    .section { margin-top: 2em; border-top: 1px solid #555; padding-top: 1em; }
+    label { display: block; text-align: left; margin: 0.5em 0; }
+    ul { list-style: none; padding: 0; text-align: left; }
+    li { margin: 0.5em 0; }
+    .legal { font-size: 0.8em; color: #ccc; text-align: justify; margin-top: 2em; }
+  </style>
+</head>
+<body>
+
+  <div class="container" id="registerBox">
+    <h1>📩 Registro inicial</h1>
+    <p>Ingresa tu correo electrónico para acceder a la herramienta.</p>
+    <form id="registroForm" onsubmit="enviarRegistro(event)">
+      <input type="email" id="emailInput" name="email" placeholder="tuemail@gmail.com" required>
+      <label><input type="checkbox" id="optInOffers" name="ofertas"> Deseo recibir ofertas exclusivas de BODYCAM MÉXICO</label>
+      <button type="submit">Registrarme</button>
+    </form>
+  </div>
+
+  <div class="container" id="subscribeBox" style="display:none;">
+    <h2>📺 Paso 2: Suscríbete al canal BODYCAM MÉXICO</h2>
+    <p>Haz clic en el botón para suscribirte. Se abrirá en otra pestaña.</p>
+    <a href="https://www.youtube.com/@BodycamFilesMx?sub_confirmation=1" target="_blank" onclick="markVisited()">
+      <button>Suscribirme ahora</button>
+    </a>
+    <div style="margin-top:1em;">
+      <label><input type="checkbox" id="subCheck" disabled> ✅ Verificación automática: suscripción detectada</label>
+    </div>
+    <button onclick="confirmSubscription()">Continuar</button>
+  </div>
+
+  <div class="container" id="toolBox" style="display:none;">
+    <h1>🔗 Generador Viral de Suscriptores</h1>
+    <p>Ingresa tu URL de canal de YouTube para generar tu link con truco de suscripción automática.</p>
+    <input type="text" id="channelUrl" placeholder="https://www.youtube.com/channel/UCxxxxxx">
+    <button onclick="generateLink()">Generar Link Viral</button>
+    <div class="result" id="resultBox" style="display:none;">
+      <p>✅ Tu link viral es:</p>
+      <p id="generatedLink"></p>
+      <button onclick="copyLink()">📋 Copiar al portapapeles</button>
+    </div>
+
+    <div class="section">
+      <h2>📘 Guía secreta para monetizar en YouTube</h2>
+      <p>¿Sabías que hay trucos ocultos que los grandes canales usan para crecer más rápido?</p>
+      <ul>
+        <li>🔓 El truco del botón de suscripción automática</li>
+        <li>📈 Cómo aumentar tus vistas sin pagar publicidad</li>
+        <li>💰 Cómo activar ingresos sin infringir políticas</li>
+        <li>🌍 Estrategias para viralizar en redes sociales</li>
+      </ul>
+      <p><strong>Precio especial: solo $10 MXN</strong> — menos que un café, más útil que mil tutoriales.</p>
+      <button onclick="window.open('https://sv1dsi-qk.myshopify.com/products/truco-boton-suscripcion-automatica', '_blank')">🛒 Comprar ahora</button>
+    </div>
+
+    <div class="section">
+      <h2>🤝 ¿Quieres comenzar a monetizar tu contenido?</h2>
+      <p>BODYCAM MÉXICO es un programa colaborativo donde:</p>
+      <ul>
+        <li>🚀 Te ayudamos a viralizar tu canal</li>
+        <li>🎯 Te damos acceso a herramientas premium</li>
+        <li>🔐 Protegemos tu identidad digital y monetización</li>
+        <li>🌐 Te conectamos con una comunidad ética y global</li>
+      </ul>
+      <button onclick="window.open('https://www.youtube.com/@BodycamFilesMx?sub_confirmation=1', '_blank')">📺 Ir al canal con truco</button>
+      <button onclick="window.open('https://bodycam.mx/registro', '_blank')">📝 Registrarme como creador</button>
+    </div>
+
+    <div class="section">
+      <h2>🔁 Acceso directo para uso futuro</h2>
+      <p>Guarda este link para usar la herramienta sin repetir el proceso:</p>
+      <p><strong>https://bodycamtools.github.io/solo-herramienta</strong></p>
+    </div>
+
+    <div class="legal">
+      <p>🔒 <strong>Uso ético y legal:</strong> Esta herramienta y sus contenidos están diseñados exclusivamente para fines educativos, informativos y colaborativos. BODYCAM MÉXICO no se responsabiliza por usos indebidos, manipulaciones o violaciones a las políticas de plataformas externas. Al adquirir este producto, aceptas utilizarlo de forma ética, respetando los términos de cada plataforma y promoviendo una cultura digital responsable.</p>
+    </div>
+  </div>
+
+  <script>
+    function enviarRegistro(e) {
+      e.preventDefault();
+      const email = document.getElementById('emailInput').value.trim();
+      const ofertas = document.getElementById('optInOffers').checked ? "Sí" : "No";
+      const emailRegex = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+      if (!emailRegex.test(email)) {
+        alert('Por favor ingresa un correo válido.');
+        return;
+      }
+
+      fetch("https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec", {
+        method: "POST",
+        body: new URLSearchParams({ email, ofertas })
+      }).then(() => {
+        document.getElementById('registerBox').style.display = 'none';
+        document.getElementById('subscribeBox').style.display = 'block';
+      }).catch(() => {
+        alert("Hubo un error al registrar tu correo.");
+      });
+    }
+
+    function markVisited() {
+      setTimeout(() => {
+        document.getElementById('subCheck').checked = true;
+      }, 1000);
+    }
+
+    function confirmSubscription() {
+      const checked = document.getElementById('subCheck').checked;
+      if (checked) {
+        document.getElementById('subscribeBox').style.display = 'none';
+        document.getElementById('toolBox').style.display = 'block';
+      } else {
+        alert('Por favor visita el canal y suscríbete antes de continuar.');
+      }
+    }
+
+    function generateLink() {
+      const url = document.getElementById('channelUrl').value.trim();
+      if (!url.includes('youtube.com')) {
+        alert('Por favor ingresa una URL válida de YouTube.');
+        return;
+      }
+      const viralUrl = url.includes('?') ? url + '&sub_confirmation=1' : url + '?sub_confirmation=1';
+      document.getElementById('generatedLink').textContent = viralUrl;
+      document.getElementById('resultBox').style.display = 'block';
+    }
+
+    function copyLink() {
+      const text = document.getElementById('generatedLink').textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        alert('Link copiado al portap

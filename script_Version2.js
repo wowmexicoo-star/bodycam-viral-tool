@@ -1,0 +1,3 @@
+// Reemplaza con tu URL de Apps Script
+const APP_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyJv37ZvlydnuYrkiIHBjUZR_6SGNeClIK5ppKONDgqQGLWK_ygnPgsTAFLeMOkj_iW/exec";
+// ...resto del contenido como te lo entregué antes...
